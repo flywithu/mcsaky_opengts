@@ -43,15 +43,15 @@ ADD tomcat-users.xml /usr/local/apache-tomcat-$TOMCAT_VERSION/conf/
 RUN curl -L https://github.com/javaee/javamail/releases/download/JAVAMAIL-1_6_0/javax.mail.jar -o /usr/local/OpenGTS_$GTS_VERSION/jlib/javamail/javax.mail.jar
 
 # put mysql.java in place
-RUN curl -L http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.31.tar.gz  -o /usr/local/OpenGTS_$GTS_VERSION/jlib/jdbc.mysql/mysql-connector-java-5.1.31.tar.gz && \
-     tar xvf /usr/local/OpenGTS_$GTS_VERSION/jlib/jdbc.mysql/mysql-connector-java-5.1.31.tar.gz mysql-connector-java-5.1.31/mysql-connector-java-5.1.31-bin.jar -O > /usr/local/OpenGTS_$GTS_VERSION/jlib/jdbc.mysql/mysql-connector-java-5.1.31-bin.jar && \
-     rm -f /usr/local/OpenGTS_$GTS_VERSION/jlib/jdbc.mysql/mysql-connector-java-5.1.31.tar.gz
+RUN curl -L https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-j-9.1.0.tar.gz  -o /usr/local/OpenGTS_$GTS_VERSION/jlib/jdbc.mysql/mysql-connector-j-9.1.0.tar.gz && \
+     tar xvf /usr/local/OpenGTS_$GTS_VERSION/jlib/jdbc.mysql/mysql-connector-j-9.1.0.tar.gz mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar -O > /usr/local/OpenGTS_$GTS_VERSION/jlib/jdbc.mysql/mysql-connector-j-9.1.0.jar && \
+     rm -f /usr/local/OpenGTS_$GTS_VERSION/jlib/jdbc.mysql/mysql-connector-j-9.1.0.jar.gz
 
 RUN cp $GTS_HOME/jlib/*/*.jar $CATALINA_HOME/lib/
 RUN cp $GTS_HOME/jlib/*/*.jar $JAVA_HOME/jre/lib/ext/
 #RUN cp $GTS_HOME/jlib/*/*.jar $GTS_HOME/build/lib/
 
-RUN cd $GTS_HOME; sed -i 's/\(mysql-connector-java\).*.jar/\1-5.1.31-bin.jar/' build.xml; \
+RUN cd $GTS_HOME; sed -i 's/\(mysql-connector-java\).*.jar/\j-9.1.0.jar/' build.xml; \
     sed -i 's/\(<include name="mail.jar"\/>\)/\1\n\t<include name="javax.mail.jar"\/>/' build.xml; \
     sed -i 's/"mail.jar"/"javax.mail.jar"/' src/org/opengts/tools/CheckInstall.java
 
